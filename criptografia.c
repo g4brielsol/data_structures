@@ -19,48 +19,25 @@ Lista* criar (void)
 // insercao: retorna a lista atualizada 
 Lista* inserir(Lista* proximo, char informacao)
 {
-    /*
-    Lista* novo = (Lista*) malloc(sizeof(Lista));
-    //Lista* next
-    novo->info = informacao;
-    novo->prox = NULL;
-    */
-    Lista* novo = (Lista*) malloc(sizeof(Lista));
-
-    if(proximo->prox == NULL){
-    proximo->prox = novo;
-    //printf("added at beginning\n");
-    }
-
-    else
-    {
-        //else loop through the list and find the last
-        //node, insert next to it
-        Lista* atual = proximo;
-        while (1) 
-        { // Change 2
-            if(atual->prox == NULL)
-            {
-                atual->prox = novo;
-                //printf("added later\n");
-                break; // Change 3
-            }
-            atual = atual->prox;
-        }   
-    return novo;
-    }
+ Lista* novo = (Lista*) malloc(sizeof(Lista));
+ novo->info = informacao;
+ novo->prox = proximo;
+ return novo;
 }
 
+
 // percorrer: percorre os elementos
-void percorrer(Lista* list)
+void percorrer(Lista* list, int tamanho)
 {
-    Lista* p; /* variável auxiliar para percorrer a lista */
-    p = list;
-    while(p != NULL)
+    Lista* p = list; /* variável auxiliar para percorrer a lista */
+    int i = 0;
+    for(i = 0; i < tamanho; i++)
         {
             printf("%c", p->info);// fazer alguma coisa;
             p = p->prox;
         }
+    printf("\n");
+    return;
 }
 
 int deslocamento(Lista* list)
@@ -169,31 +146,33 @@ void main()
     int i;
     
     Lista* lista_mensagem;
-    lista_mensagem = criar();
-    for(i=0; i < strlen(mensagem); i++)
+    int tamanho_mensagem = 0;
+    for(i=strlen(mensagem); i >= 0; i--)
     {
-        printf("%c", mensagem[i]);
+        //printf("%c", mensagem[i]);
         lista_mensagem = inserir(lista_mensagem, mensagem[i]);
+        tamanho_mensagem += 1;
     }
     
     Lista* lista_chave_simetrica;
     lista_chave_simetrica = criar();
-    int tamanho = 0;
-    for(i=0; i < strlen(chave_simetrica); i++)
+    int tamanho_chave = 0;
+    for(i=strlen(chave_simetrica); i >= 0 ; i--)
     {
         lista_chave_simetrica = inserir(lista_chave_simetrica, chave_simetrica[i]);
-        tamanho += 1;
+        tamanho_chave += 1;
     }
 
     int desloc;
     desloc = deslocamento(lista_chave_simetrica);
     //printf("%d\n", desloc);
-    int inter[tamanho];
+    int inter[tamanho_chave];
     intervalos(lista_chave_simetrica, desloc, &inter);
     
     Lista* new;
     //new = insercao_nos( lista_mensagem, lista_chave_simetrica, &inter, tamanho);
-    percorrer(lista_mensagem);
+    percorrer(lista_mensagem, tamanho_mensagem);
+    percorrer(lista_chave_simetrica, tamanho_chave);
     /* for(i=0; i < tamanho; i++)
     {
         printf("%d\n", inter[i]);
