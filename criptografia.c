@@ -27,17 +27,16 @@ Lista* inserir(Lista* proximo, char informacao)
 
 
 // percorrer: percorre os elementos
-void percorrer(Lista* list, int tamanho)
+void percorrer(Lista* list)
 {
-    Lista* p = list; /* variável auxiliar para percorrer a lista */
-    int i = 0;
-    for(i = 0; i < tamanho; i++)
-        {
-            printf("%c", p->info);// fazer alguma coisa;
-            p = p->prox;
-        }
+
+    Lista* p = list;
+    while(p != NULL)
+    {
+        printf("%c", p->info);
+        p = p->prox;
+    }
     printf("\n");
-    return;
 }
 
 int deslocamento(Lista* list)
@@ -64,7 +63,7 @@ void intervalos(Lista* list, int desloc, int *intervalo)
     }
 }
 
-Lista* insercao_nos(Lista* list_mens, Lista* list_chave, int *intervalo, int tamanho)
+Lista* insercao_nos(Lista* list_mens, Lista* list_chave, int *intervalo, int tamanho, int *tamanho_new)
 {
     Lista* pon_mens; 
     Lista* pon_chave;
@@ -78,6 +77,7 @@ Lista* insercao_nos(Lista* list_mens, Lista* list_chave, int *intervalo, int tam
             contador_intervalo = 0;
             seletor_intervalo++;
             pon_chave = pon_chave->prox;
+            *tamanho_new += 1;
             if(pon_chave == NULL)
             {
                 pon_chave = list_chave;
@@ -146,23 +146,29 @@ void main()
     int i;
     
     Lista* lista_mensagem;
+    lista_mensagem->info = mensagem[strlen(mensagem) - 1];
+    lista_mensagem->prox = NULL;
     int tamanho_mensagem = 0;
-    for(i=strlen(mensagem); i >= 0; i--)
+    for(i=strlen(mensagem) - 2; i >= 0; i--)
     {
         //printf("%c", mensagem[i]);
         lista_mensagem = inserir(lista_mensagem, mensagem[i]);
         tamanho_mensagem += 1;
     }
-    
+
+
     Lista* lista_chave_simetrica;
-    lista_chave_simetrica = criar();
+    lista_chave_simetrica->info = chave_simetrica[strlen(chave_simetrica) - 1]; 
+    lista_chave_simetrica->prox = NULL;
     int tamanho_chave = 0;
-    for(i=strlen(chave_simetrica); i >= 0 ; i--)
+    for(i=strlen(chave_simetrica) - 2; i >= 0 ; i--)
     {
         lista_chave_simetrica = inserir(lista_chave_simetrica, chave_simetrica[i]);
         tamanho_chave += 1;
     }
-
+    percorrer(lista_mensagem);
+    percorrer(lista_chave_simetrica);
+    /*
     int desloc;
     desloc = deslocamento(lista_chave_simetrica);
     //printf("%d\n", desloc);
@@ -170,9 +176,18 @@ void main()
     intervalos(lista_chave_simetrica, desloc, &inter);
     
     Lista* new;
-    //new = insercao_nos( lista_mensagem, lista_chave_simetrica, &inter, tamanho);
-    percorrer(lista_mensagem, tamanho_mensagem);
-    percorrer(lista_chave_simetrica, tamanho_chave);
+    int contador = 0;
+    int *tamanho_new;
+    tamanho_new = &contador;
+    new = insercao_nos( lista_mensagem, lista_chave_simetrica, &inter, tamanho_chave, tamanho_new);
+
+    for(i=0; i<tamanho_chave; i++)
+    {
+        printf("%d\n", inter[i]);
+    }
+    //percorrer(lista_mensagem, tamanho_mensagem);
+    //percorrer(lista_chave_simetrica, tamanho_chave);
+    //percorrer(lista_chave_simetrica, contador);
     /* for(i=0; i < tamanho; i++)
     {
         printf("%d\n", inter[i]);
