@@ -19,14 +19,14 @@ Lista* inserir(Lista* proximo, char informacao)
  return novo;
 }
 
-Lista* inserir_2(Lista* proximo, char informacao)
+Lista* inserir_qqr_posicao(Lista* lista, int no)
 {
- Lista* novo_2 = (Lista*) malloc(sizeof(Lista));
- novo_2->info = informacao;
- novo_2->prox = proximo;
- return novo_2;
+    Lista* ponteiro;
+    ponteiro = (Lista*) malloc(sizeof(Lista));
+    ponteiro->info = no;
+    ponteiro->prox = lista->prox;
+    lista->prox = ponteiro;
 }
-
 
 // percorrer: percorre os elementos
 void percorrer(Lista* list)
@@ -166,7 +166,7 @@ void main()
   {
       printf("%d\n", intervalos[j]);
   }
-  
+  /* 
     Lista* lista_mensagem;
     // insere o ultimo caractere da variavel mensagem
     lista_mensagem->info = mensagem[strlen(mensagem) - 1];
@@ -180,7 +180,7 @@ void main()
         lista_mensagem = inserir(lista_mensagem, mensagem[i]);
         tamanho_mensagem += 1;
     }
-    
+    */
 }
     /*
 

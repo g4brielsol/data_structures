@@ -19,15 +19,6 @@ Lista* inserir(Lista* proximo, char informacao)
  return novo;
 }
 
-Lista* inserir_2(Lista* proximo, char informacao)
-{
- Lista* novo_2 = (Lista*) malloc(sizeof(Lista));
- novo_2->info = informacao;
- novo_2->prox = proximo;
- return novo_2;
-}
-
-
 // percorrer: percorre os elementos
 void percorrer(Lista* list)
 {
