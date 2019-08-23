@@ -63,18 +63,28 @@ void main()
     int cripto;
     scanf("%d", &cripto);
     printf("Digite a mensagem: ");
-    char mensagem[50];
-    scanf("%s", &mensagem);
+    char mensagem[50], carac;
+    int cont_str = 0;
+    while(scanf("%c", &carac) == 1)
+    {
+        mensagem[cont_str] = carac;
+        cont_str += 1;
+    }
     printf("Digite a chave simetrica: ");
     char chave_simetrica[50];
-    scanf("%s", &chave_simetrica);
-    int i;
+    cont_str = 0;
+    while(scanf("%c", &carac) == 1)
+    {
+        chave_simetrica[cont_str] = carac;
+        cont_str += 1;
+    }
     
     Lista* lista_mensagem = (Lista*) malloc(sizeof(Lista));
     // insere o ultimo caractere da variavel mensagem na lista
     lista_mensagem->info = mensagem[strlen(mensagem) - 1];
     // ultima posicao na lista aponta para nulo
     lista_mensagem->prox = NULL;
+    int i;
     //adiciona os caracteres de tras para frente, para a lista ficar em ordem
     for(i=strlen(mensagem) - 2; i >= 0; i--)
     {
@@ -145,7 +155,7 @@ void main()
             tamanho_crypto += 1;
         }
         // printa a saida da encriptacao
-        printf("%d\n", strlen(mensagem));
+        printf("%ld\n", strlen(mensagem));
         printf("%d\n", tamanho_crypto);
         percorrer(ponteiro_deslocamento_inicial);
         // da um free nos espacos de memoria alocados dinamicamente
@@ -193,7 +203,7 @@ void main()
             tamanho_decrypto += 1;
         }
         // printa a saida para a mensagem decifrada
-        printf("%d\n", strlen(mensagem));
+        printf("%ld\n", strlen(mensagem));
         printf("%d\n", tamanho_decrypto);
         percorrer(lista_mensagem);
         // da um free nos espacos de memoria alocados dinamicamente
