@@ -1,0 +1,45 @@
+frase	trabalho.c	/^struct frase{$/;"	s	file:
+string	trabalho.c	/^    char string;$/;"	m	struct:frase	file:
+ponteiro	trabalho.c	/^struct ponteiro{$/;"	s	file:
+letra	trabalho.c	/^    struct frase letra;$/;"	m	struct:ponteiro	typeref:struct:ponteiro::frase	file:
+prox	trabalho.c	/^    struct ponteiro *prox;$/;"	m	struct:ponteiro	typeref:struct:ponteiro::ponteiro	file:
+lista	trabalho.c	/^typedef struct ponteiro* lista;$/;"	t	typeref:struct:ponteiro	file:
+pont	trabalho.c	/^typedef struct ponteiro pont;$/;"	t	typeref:struct:ponteiro	file:
+cria_lista	trabalho.c	/^lista* cria_lista(){$/;"	f
+libera_lista	trabalho.c	/^void libera_lista(lista* li){$/;"	f
+posicao_da_lista	trabalho.c	/^int posicao_da_lista(lista* li, int pos, struct frase *le){$/;"	f
+insere_lista_inicio	trabalho.c	/^int insere_lista_inicio(lista* li, struct frase le){$/;"	f
+insere_lista_ordenada	trabalho.c	/^int insere_lista_ordenada(lista* li, struct frase le){$/;"	f
+tamanho_lista	trabalho.c	/^int tamanho_lista(Lista* li){$/;"	f
+main	trabalho.c	/^int main()$/;"	f
+lista	criptografia.c	/^struct lista {$/;"	s	file:
+info	criptografia.c	/^ char info;$/;"	m	struct:lista	file:
+prox	criptografia.c	/^ struct lista* prox;$/;"	m	struct:lista	typeref:struct:lista::lista	file:
+Lista	criptografia.c	/^typedef struct lista Lista;$/;"	t	typeref:struct:lista	file:
+inserir	criptografia.c	/^Lista* inserir(Lista* proximo, char informacao)$/;"	f
+percorrer	criptografia.c	/^void percorrer(Lista* list)$/;"	f
+deslocamento	criptografia.c	/^int deslocamento(Lista* list)$/;"	f
+insercao_nos	criptografia.c	/^Lista* insercao_nos(Lista* list_mens, Lista* list_chave, int *intervalo, int tamanho, int *tamanho_new)$/;"	f
+retirar	criptografia.c	/^Lista* retirar(Lista* lista, char caractere_retirado) $/;"	f
+liberar	criptografia.c	/^void liberar (Lista* lista)$/;"	f
+main	criptografia.c	/^void main()$/;"	f
+lista	criptografia1.c	/^struct lista {$/;"	s	file:
+info	criptografia1.c	/^ char info;$/;"	m	struct:lista	file:
+prox	criptografia1.c	/^ struct lista* prox;$/;"	m	struct:lista	typeref:struct:lista::lista	file:
+Lista	criptografia1.c	/^typedef struct lista Lista;$/;"	t	typeref:struct:lista	file:
+inserir	criptografia1.c	/^Lista* inserir(Lista* proximo, char informacao)$/;"	f
+percorrer	criptografia1.c	/^void percorrer(Lista* list)$/;"	f
+deslocamento	criptografia1.c	/^int deslocamento(Lista* list)$/;"	f
+insercao_nos	criptografia1.c	/^Lista* insercao_nos(Lista* list_mens, Lista* list_chave, int *intervalo, int tamanho, int *tamanho_new)$/;"	f
+retirar	criptografia1.c	/^Lista* retirar(Lista* lista, char caractere_retirado) $/;"	f
+liberar	criptografia1.c	/^void liberar (Lista* lista)$/;"	f
+main	criptografia1.c	/^void main()$/;"	f
+lista	criptografia2.c	/^struct lista {$/;"	s	file:
+info	criptografia2.c	/^ char info;$/;"	m	struct:lista	file:
+prox	criptografia2.c	/^ struct lista* prox;$/;"	m	struct:lista	typeref:struct:lista::lista	file:
+Lista	criptografia2.c	/^typedef struct lista Lista;$/;"	t	typeref:struct:lista	file:
+inserir	criptografia2.c	/^Lista* inserir(Lista* proximo, char informacao)$/;"	f
+percorrer	criptografia2.c	/^void percorrer(Lista* list)$/;"	f
+deslocamento	criptografia2.c	/^int deslocamento(Lista* list)$/;"	f
+liberar	criptografia2.c	/^void liberar (Lista* lista)$/;"	f
+main	criptografia2.c	/^void main()$/;"	f
