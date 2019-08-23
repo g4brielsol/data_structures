@@ -65,20 +65,28 @@ void main()
     printf("Digite a mensagem: ");
     char mensagem[50], carac;
     int cont_str = 0;
-    while(scanf("%c", &carac) == 1)
+    scanf("%s", &mensagem);
+    /*
+    fgets(mensagem, sizeof(mensagem), stdin);
+    fflush(stdin);
+    
+    while(scanf("%c", &carac) > 0)
     {
         mensagem[cont_str] = carac;
         cont_str += 1;
     }
+    */
     printf("Digite a chave simetrica: ");
     char chave_simetrica[50];
     cont_str = 0;
-    while(scanf("%c", &carac) == 1)
+    scanf("%s", &chave_simetrica);
+    /*
+    while(scanf("%c", &carac) > 0)
     {
         chave_simetrica[cont_str] = carac;
         cont_str += 1;
     }
-    
+    */
     Lista* lista_mensagem = (Lista*) malloc(sizeof(Lista));
     // insere o ultimo caractere da variavel mensagem na lista
     lista_mensagem->info = mensagem[strlen(mensagem) - 1];
