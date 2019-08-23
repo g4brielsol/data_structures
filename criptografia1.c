@@ -18,16 +18,6 @@ Lista* inserir(Lista* proximo, char informacao)
  novo->prox = proximo;
  return novo;
 }
-
-Lista* inserir_2(Lista* proximo, char informacao)
-{
- Lista* novo_2 = (Lista*) malloc(sizeof(Lista));
- novo_2->info = informacao;
- novo_2->prox = proximo;
- return novo_2;
-}
-
-
 // percorrer: percorre os elementos
 void percorrer(Lista* list)
 {
@@ -134,27 +124,30 @@ void main()
     printf("Digite a chave simetrica: ");
     char chave_simetrica[50];
     scanf("%s", &chave_simetrica);
-    int i;
 
-    
     Lista* lista_chave_simetrica;
     lista_chave_simetrica->info = chave_simetrica[strlen(chave_simetrica) - 1]; 
     lista_chave_simetrica->prox = NULL;
     int tamanho_chave = 1;
-    for(i=strlen(chave_simetrica) - 2; i >= 0 ; i--)
+    int i; 
+    for(i = (strlen(chave_simetrica) - 2); i >= 0; i--)
     {
-        lista_chave_simetrica = inserir_2(lista_chave_simetrica, chave_simetrica[i]);
+        Lista* novo = (Lista*) malloc(sizeof(Lista));
+        lista_chave_simetrica->info = chave_simetrica[i];
         tamanho_chave += 1;
+        //printf("%d\n", i);
     }
-    //percorrer(lista_chave_simetrica);
+
+    percorrer(lista_chave_simetrica);
+ /*
     int j =0;
     int intervalos[tamanho_chave];
     int desloc;
     desloc = deslocamento(lista_chave_simetrica);
     Lista* copia;
     copia = lista_chave_simetrica;
-    printf("%d\n", tamanho_chave);
-   percorrer(copia);
+    //printf("%d\n", tamanho_chave);
+   //percorrer(copia);
 
    while(copia != NULL)
   {
@@ -164,9 +157,11 @@ void main()
   }
   for(j=0; j<tamanho_chave; j++)
   {
-      printf("%d\n", intervalos[j]);
+      ;//printf("%d\n", intervalos[j]);
   }
-  
+    */
+}
+  /*
     Lista* lista_mensagem;
     // insere o ultimo caractere da variavel mensagem
     lista_mensagem->info = mensagem[strlen(mensagem) - 1];
@@ -182,7 +177,7 @@ void main()
     }
     
 }
-    /*
+     *//*
 
     //printf("%d\n", desloc);
     int inter[tamanho_chave];
