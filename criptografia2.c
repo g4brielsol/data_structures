@@ -19,19 +19,19 @@ Lista* inserir(Lista* proximo, char informacao)
  return novo;
 }
 
-Lista* inserir_qqr_posicao(Lista* lista, int no)
+Lista* inserir_qqr_posicao(Lista* lista, Lista* no)
 {
     Lista* ponteiro;
     ponteiro = (Lista*) malloc(sizeof(Lista));
     ponteiro->info = no;
     ponteiro->prox = lista->prox;
     lista->prox = ponteiro;
+    return ponteiro;
 }
 
 // percorrer: percorre os elementos
 void percorrer(Lista* list)
 {
-
     Lista* p = list;
     while(p != NULL)
     {
@@ -54,30 +54,6 @@ int deslocamento(Lista* list)
     return deslocamento;
 }
 
-Lista* insercao_nos(Lista* list_mens, Lista* list_chave, int *intervalo, int tamanho, int *tamanho_new)
-{
-    Lista* pon_mens; 
-    Lista* pon_chave;
-    int contador_intervalo = 0, seletor_intervalo = 0;
-    pon_chave = list_chave;
-    for(pon_mens = list_mens; pon_mens != NULL; pon_mens = pon_mens->prox)
-    {
-        if(contador_intervalo >= *(intervalo+(seletor_intervalo % tamanho)))
-        {
-            pon_mens = inserir(pon_mens, pon_chave->info);
-            contador_intervalo = 0;
-            seletor_intervalo++;
-            pon_chave = pon_chave->prox;
-            *tamanho_new += 1;
-            if(pon_chave == NULL)
-            {
-                pon_chave = list_chave;
-            }
-        }
-        contador_intervalo++;
-    }
-    return pon_mens;
-}
 
 // retira: retira elemento da lista */
 Lista* retirar(Lista* lista, char caractere_retirado) 
@@ -137,13 +113,13 @@ void main()
     int i;
 
     
-    Lista* lista_chave_simetrica;
+    Lista* lista_chave_simetrica = (Lista*) malloc(sizeof(Lista));
     lista_chave_simetrica->info = chave_simetrica[strlen(chave_simetrica) - 1]; 
     lista_chave_simetrica->prox = NULL;
     int tamanho_chave = 1;
     for(i=strlen(chave_simetrica) - 2; i >= 0 ; i--)
     {
-        lista_chave_simetrica = inserir_2(lista_chave_simetrica, chave_simetrica[i]);
+        lista_chave_simetrica = inserir(lista_chave_simetrica, chave_simetrica[i]);
         tamanho_chave += 1;
     }
     //percorrer(lista_chave_simetrica);
@@ -151,10 +127,10 @@ void main()
     int intervalos[tamanho_chave];
     int desloc;
     desloc = deslocamento(lista_chave_simetrica);
-    Lista* copia;
+    Lista* copia = (Lista*) malloc(sizeof(Lista));
     copia = lista_chave_simetrica;
-    printf("%d\n", tamanho_chave);
-   percorrer(copia);
+    //printf("%d\n", tamanho_chave);
+   //percorrer(copia);
 
    while(copia != NULL)
   {
@@ -162,16 +138,17 @@ void main()
       copia = copia->prox;
       j += 1; 
   }
+  /*
   for(j=0; j<tamanho_chave; j++)
   {
       printf("%d\n", intervalos[j]);
   }
-  /* 
-    Lista* lista_mensagem;
+   */
+    Lista* lista_mensagem = (Lista*) malloc(sizeof(Lista));
     // insere o ultimo caractere da variavel mensagem
     lista_mensagem->info = mensagem[strlen(mensagem) - 1];
-    // aponta para o null, fim da lista
     lista_mensagem->prox = NULL;
+    // aponta para o null, fim da lista
     int tamanho_mensagem = 0;
     //adiciona os caracteres de tras para frente, para a lista ficar em ordem
     for(i=strlen(mensagem) - 2; i >= 0; i--)
@@ -180,29 +157,46 @@ void main()
         lista_mensagem = inserir(lista_mensagem, mensagem[i]);
         tamanho_mensagem += 1;
     }
-    */
-}
-    /*
-
-    //printf("%d\n", desloc);
-    int inter[tamanho_chave];
-    intervalos(lista_chave_simetrica, desloc, &inter);
+    //percorrer(lista_mensagem);
+    //Lista* copia_2 = lista_chave_simetrica; //(Lista*) malloc(sizeof(Lista));
+    //copia_2 = lista_chave_simetrica;
     
-    Lista* new;
-    int contador = 0;
-    int *tamanho_new;
-    tamanho_new = &contador;
-    new = insercao_nos( lista_mensagem, lista_chave_simetrica, &inter, tamanho_chave, tamanho_new);
+    //Lista* copia_lista_mensagem = lista_mensagem; //(Lista*) malloc(sizeof(Lista));
+    //copia_lista_mensagem = lista_mensagem; 
+    int posicao=0, contador_nos=1;
+    Lista* copia_mens = lista_mensagem;
 
-    for(i=0; i<tamanho_chave; i++)
+    while(lista_mensagem != NULL)
     {
-        printf("%d\n", inter[i]);
+        lista_mensagem = lista_mensagem->prox;
+        contador_nos += 1;
+        //printf("%d", intervalos[posicao]);
+        if(contador_nos == intervalos[posicao])
+        {
+            //lista_mensagem = inserir_qqr_posicao(lista_mensagem, lista_chave_simetrica);
+            //lista_chave_simetrica = lista_chave_simetrica->prox;
+            
+            Lista* ponteiro = (Lista*) malloc(sizeof(Lista));
+            ponteiro->info = lista_chave_simetrica->info;
+            ponteiro->prox = lista_mensagem->prox;
+            lista_mensagem->prox = ponteiro;
+            lista_chave_simetrica = lista_chave_simetrica->prox;
+            posicao += 1;
+            contador_nos = -1;
+        }
     }
-    //percorrer(lista_mensagem, tamanho_mensagem);
-    //percorrer(lista_chave_simetrica, tamanho_chave);
-    //percorrer(lista_chave_simetrica, contador);
-    /* for(i=0; i < tamanho; i++)
+    //percorrer(copia_mens);
+    Lista* ponteiro_deslocamento = (Lista*) malloc(sizeof(Lista));
+    Lista* ponteiro_deslocamento_inicial = copia_mens;
+    while(copia_mens != NULL)
     {
-        printf("%d\n", inter[i]);
+        copia_mens->info = (((copia_mens->info - 97) + desloc) % 26) + 97;
+        copia_mens = copia_mens->prox;
+        desloc += 1;
+        //ponteiro_deslocamento = ponteiro_deslocamento->prox; 
     }
-}*/
+    percorrer(ponteiro_deslocamento_inicial);
+
+
+}
+    
