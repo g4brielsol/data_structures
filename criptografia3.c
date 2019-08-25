@@ -56,6 +56,7 @@ void liberar (Lista* lista)
     }
 }
 
+
 void main()
 {
     // ler opreacao de encriptar ou decifrar
@@ -79,6 +80,7 @@ void main()
     //adiciona os caracteres de tras para frente, para a lista ficar em ordem
     for(i=strlen(mensagem) - 2; i >= 0; i--)
     {
+        //printf("%c", mensagem[i]);
         lista_mensagem = inserir(lista_mensagem, mensagem[i]);
     }
     
@@ -94,7 +96,7 @@ void main()
     }
 
     //cria array com intervalos
-    int *intervalos = (int*)malloc(sizeof(int) * tamanho_chave);
+    int intervalos[tamanho_chave];
     int desloc;
     //calcula o deslocamento
     desloc = deslocamento(lista_chave_simetrica);
@@ -138,6 +140,20 @@ void main()
                 }
             }
             contador_intervalo += 1;
+            /*
+            lista_mensagem = lista_mensagem->prox;
+            contador_nos += 1;
+            if(contador_nos == intervalos[posicao])
+            {
+                Lista* ponteiro = (Lista*) malloc(sizeof(Lista));
+                ponteiro->info = lista_chave_simetrica->info;
+                ponteiro->prox = lista_mensagem->prox;
+                lista_mensagem->prox = ponteiro;
+                lista_chave_simetrica = lista_chave_simetrica->prox;
+                posicao += 1;
+                contador_nos = -1;
+            } 
+            */
         }
 
         // aplicacao da cifra de cesar: mudar as letras da mensagem + chave para finalizar a criptografia
@@ -162,6 +178,8 @@ void main()
     // se for para decriptar
     else
     {
+        ;
+        
         //aplicacao da cifra de cesar de modo reverso para decifrar a mensagem
         int aux_desloc = desloc;
         Lista* copia_mensagem = lista_mensagem;
@@ -180,44 +198,58 @@ void main()
             copia_mensagem = copia_mensagem->prox;
             
         }
+        
         //remocao dos nos da chave que estao na mensagem original
-        int contador_intervalo = 2, seletor_intervalo = 0;
-        int tamanho_decrypto = 0;
+        //int posicao=0, contador_nos=1, tamanho_decrypto=0;
+        int contador_intervalo = 0, seletor_intervalo = 0;
+        int tamanho_decrypto = 1;
         Lista* copia_mens = lista_mensagem;
-        Lista* atual = NULL;
+        copia_mens = copia_mens->prox; 
+        //percorrer(copia_mens);
+        ///*
         while(copia_mens != NULL)
         {
+            Lista* anterior = copia_mens;
             copia_mens = copia_mens->prox;
-            if(contador_intervalo >= intervalos[seletor_intervalo % tamanho_chave])
+            contador_intervalo += 1;
+            
+            if(contador_intervalo == intervalos[seletor_intervalo % tamanho_chave] -2)
             {
-                atual = copia_mens;
+                printf("antes %c\n", copia_mens->info);
                 if(copia_mens->prox == NULL)
                 {
-                    copia_mens = NULL;
-                    atual->prox = NULL;
-                    tamanho_decrypto += 1;
+                    copia_mens->prox = NULL;    
                 }
                 else
                 {
-                    copia_mens = copia_mens->prox;
-                    atual->prox = copia_mens->prox;   
+                    copia_mens->prox = copia_mens->prox->prox;   
+                    //copia_mens->prox = NULL;
                 }
-                contador_intervalo = 0;
+                printf("depois %c\n", copia_mens->info);
+                printf("%d\n", intervalos[seletor_intervalo % tamanho_chave] + 1);
+                contador_intervalo = -2;
                 seletor_intervalo += 1;
             }
-            contador_intervalo += 1;
+            
+
+            //free(copia_mens);
             tamanho_decrypto += 1;
+            //anterior = anterior->prox;
+            //char a = copia_mens->info;
+            
         }
+        
         // printa a saida para a mensagem decifrada
-        printf("%ld\n", strlen(mensagem));
-        printf("%d\n", tamanho_decrypto);
+        //printf("%ld\n", strlen(mensagem));
+        //printf("%d\n", tamanho_decrypto);
         percorrer(lista_mensagem);
         // da um free nos espacos de memoria alocados dinamicamente
+        //liberar(anterior);
         liberar(copia_mensagem);
         liberar(copia_mens);        
+        //*/
     }
     // da um free nos espacos de memoria alocados dinamicamente
-    free(intervalos);
     liberar(lista_mensagem);
     liberar(lista_chave_simetrica);
     liberar(copia_chave);
