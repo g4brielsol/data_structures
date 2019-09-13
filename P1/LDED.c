@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "LDED.h" //inclui os Protótipos
+#include "LDED.h" //inclui os Protitipos
 
 Lista* cria_lista()
 {
@@ -26,123 +26,40 @@ void libera_lista(Lista* li)
     }
 }
 
-int consulta_lista_pos(Lista* li, int pos, Tipo_Dado *dt)
-{
-    if (li == NULL || pos <= 0)
-        return ERRO;
-    Elem *no = *li;
-    int i = 1;
-    while (no != NULL && i < pos)
-	{
-        no = no->prox;
-        i++;
-    }
-    if (no == NULL)
-        return ERRO;
-    else 
-	{
-        *dt = no->dado;
-        return OK;
-    }
-}
-
-int consulta_lista_dado(Lista* li, Tipo_Dado dt, Elem **el)
-{
-    if (li == NULL)
-        return 0;
-    Elem *no = *li;
-    while (no != NULL && no->dado != dt){
-        no = no->prox;
-    }
-    if (no == NULL)
-        return ERRO;
-    else
-	{
-        *el = no;
-        return OK;
-    }
-}
-
-int insere_lista_final(Lista* li, Tipo_Dado dt)
-{
-    Elem *no;
-
-    if (li == NULL) return ERRO;
-    no = (Elem*) malloc(sizeof(Elem));
-    if (no == NULL)  return ERRO;
-	
-    no->dado = dt;
-    no->prox = NULL;
-    
-	if ((*li) == NULL) 
-	{   //lista vazia: insere início
-        no->ant = NULL;
-        *li = no;
-    }else
-	{
-        Elem *aux;
-        aux = *li;
-        while (aux->prox != NULL){
-            aux = aux->prox;
-        }
-        aux->prox = no;
-        no->ant = aux;
-    }
-    return OK;
-}
-
-int insere_lista_inicio(Lista* li, Tipo_Dado dt)
-{
-    if (li == NULL)
-        return ERRO;
-    Elem* no;
-    no = (Elem*) malloc(sizeof(Elem));
-    if (no == NULL)
-        return ERRO;
-	
-    no->dado = dt;
-    no->prox = (*li);
-    no->ant = NULL;
-    
-	if (*li != NULL) //lista não vazia: apontar para o anterior!
-        (*li)->ant = no;
-    *li = no;
-    return OK;
-}
-
-int insere_lista_ordenada(Lista* li, Tipo_Dado dt)
+int insere_lista_ordenada(Lista* li, Tipo_Dado x, Tipo_Dado y)
 {
     if (li == NULL)
         return ERRO;
     Elem *no = (Elem*) malloc(sizeof(Elem));
     if (no == NULL)
         return ERRO;
-    no->dado = dt;
+    no->x = x;
+    no->y = y;
     if ((*li) == NULL)
-	{  //lista vazia: insere início
+	{  //lista vazia: insere inicio
         no->prox = NULL;
         no->ant = NULL;
         *li = no;
         return OK;
     }
     else{
-        Elem *ante, *atual = *li;
-        while (atual != NULL && atual->dado < dt)
+        Elem *anterior, *atual = *li;
+        while (atual != NULL && ((atual->x < x) && (atual->y < y)))
 		{
-            ante = atual;
+            anterior = atual;
             atual = atual->prox;
         }
         if (atual == *li)
-		{   //insere início
+		{   //insere inicio
             no->ant = NULL;
             (*li)->ant = no;
             no->prox = (*li);
             *li = no;
         } else
 		{
-            no->prox = ante->prox;
-            no->ant = ante;
-            ante->prox = no;
+            no->prox = anterior->prox;
+            no->ant = anterior;
+            anterior->prox = no;
             if (atual != NULL)
                 atual->ant = no;
         }
@@ -150,105 +67,73 @@ int insere_lista_ordenada(Lista* li, Tipo_Dado dt)
     }
 }
 
-int remove_lista(Lista* li, Tipo_Dado dt)
-{   //TERMINAR
-    if (li == NULL)
-        return ERRO;
-    if ((*li) == NULL)//lista vazia
-        return ERRO;
-    Elem *no = *li;
-    while (no != NULL && no->dado != dt){
-        no = no->prox;
+int reorganiza_lista(Lista* li)
+{
+    Elem *anterior, *atual = *li;
+    anterior = atual;
+    atual = atual->prox;
+    while(atual != NULL)
+    {
+        if((atual->x - anterior->x > 0.5))
+        {
+            anterior->prox = atual; 
+            anterior = atual;    
+        }
+        atual = atual->prox;    
     }
-    if (no == NULL)//não encontrado
-        return ERRO;
-
-    if (no->ant == NULL)//remover o primeiro?
-        *li = no->prox;
-    else
-        no->ant->prox = no->prox;
-
-    if (no->prox != NULL)//não é o último?
-        no->prox->ant = no->ant;
-
-    free(no);
+    free(atual);
     return OK;
 }
 
-
-int remove_lista_inicio(Lista* li)
-{
-    if (li == NULL)
-        return ERRO;
-    if ((*li) == NULL)//lista vazia
-        return ERRO;
-
-    Elem *no = *li;
-    *li = no->prox;
-    if (no->prox != NULL)
-        no->prox->ant = NULL;
-
-    free(no);
-    return OK;
-}
-
-int remove_lista_final(Lista* li)
-{
-    if (li == NULL)
-        return ERRO;
-    if ((*li) == NULL) //lista vazia
-        return ERRO;
-
-    Elem *no = *li;
-    while (no->prox != NULL)
-        no = no->prox;
-
-    if (no->ant == NULL) //remover o primeiro e único
-        *li = no->prox;
-    else
-        no->ant->prox = NULL;
-
-    free(no);
-    return OK;
-}
-
-int tamanho_lista(Lista* li)
-{
-    if (li == NULL)
-        return 0;
-    int cont = 0;
-    Elem* no = *li;
-    while (no != NULL){
-        cont++;
-        no = no->prox;
-    }
-    return cont;
-}
-
-int lista_cheia(Lista* li)
-{
-    return FALSO;
-}
-
-int lista_vazia(Lista* li)
-{
-    if (li == NULL)
-        return OK;
-    if (*li == NULL)
-        return OK;
-    return FALSO;
-}
-
-void imprime_lista(Lista* li)
+void imprime_lista_especial(Lista* li, int questao)
 {
     Elem* no = *li;
-
+    Elem* compare;
+    printf("----------QUESTAO %d----------\n", questao);
+    while(no != NULL)
+    {
+        compare = no;// vai ate o ultimo elemento
+        no = no->prox; // vai atÃ© o null
+    }
+    no = compare->ant; // penultimo elemento
+    while(compare != NULL)
+    {
+        if(compare->prox == NULL || compare->ant == NULL)
+        {
+            printf("Dado: X = %.3lf - Y =  %.3lf\n",compare->x,compare->y);
+        }
+        else if(compare->x - no->x <= 0.5)
+        {
+            printf("PULOU NODO => Dado: X = %.3lf - Y =  %.3lf\n",compare->x,compare->y);
+        }
+        else
+        {
+            printf("Dado: X = %.3lf - Y =  %.3lf\n",compare->x,compare->y);
+        }
+        compare = no;
+        if(compare == NULL)
+        {
+            continue;// se o compare for null, nao existe anterior do no
+        }
+        else
+        {
+            no = no->ant;//pega o anterior do "no" caso o "no" nao seja nulo
+        }
+    }
+    free(no);
+    free(compare);
+}
+ 
+void imprime_lista(Lista* li, int questao)
+{
+    Elem* no = *li;
+    printf("----------QUESTAO %d----------\n", questao);
     if (li == NULL)
         return;
     while (no != NULL)
     {
-        printf("Dado: %5d # Ant: %p - Dado: %p - Prox: %p\n",no->dado,no->ant,no,no->prox);
+        printf("Dado: X = %.3lf - Y =  %.3lf\n",no->x,no->y);
         no = no->prox;
     }
-    printf("-------------- FIM LISTA -----------------\n");
+    free(no);
 }
