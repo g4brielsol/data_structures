@@ -3,7 +3,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include "LDED.h"
-
+// pega os dados digitados pelo usuario e faz a LDED
 void ler_data_inserir(Lista* li)
 {
     int quantidade_de_dados;
@@ -18,44 +18,47 @@ void ler_data_inserir(Lista* li)
     }
     return;
 }
-
-void funcao_decisao(Lista* li, int decisao)
+// verifica e executa a funcao digitada pelo usuario: 0, 1 ou 2
+void funcao_decisao(Lista* li)
 {
+    int decisao;
+    // scaneia a decisao do usuario: 0, 1 ou 2
+    scanf("%d", &decisao);
+    
     if(decisao == 0)
     {
+        // imprime as coordenadas, tempo, velocidade e distancia percorrida
         imprime_lista(li);
     }
 
     else if(decisao == 1)
     {
-        int posicao, distancia, velocidade;
-        scanf("%d", posicao);
-        scanf("%d", distancia);
-        scanf("%d", velocidade);
+        double posicao, distancia, velocidade;
+        scanf("%lf", &posicao);
+        scanf("%lf", &distancia);
+        scanf("%lf", &velocidade);
         radar(li, posicao, distancia, velocidade);
     }
-    /*
+    
     else if(decisao == 2)
     {
-
+        int distancia;
+        scanf("%d", &distancia);
+        remocao_gps(li, distancia);
+        imprime_lista(li);
     }
     else
     {
         ;
     }
-    */
+    return;
 }
 
 void main()
 {
     Lista *li = cria_lista();
     ler_data_inserir(li);
-    int decisao;
-    scanf("%d", &decisao);
-    funcao_decisao(li, decisao);
-    //reorganiza_lista(li);
-    //imprime_lista(li, 5);
-    //imprime_lista_especial(li, 6);
+    funcao_decisao(li);
     libera_lista(li);
 }
     
