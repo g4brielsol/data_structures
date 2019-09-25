@@ -86,26 +86,28 @@ int radar(Lista* li, int posicao, double distancia_limite, double velocidade_lim
     {
         printf("liberado\n");
     }
-    free(no);
-    free(aux);
     return OK;
 }
 int remocao_gps(Lista* li, double distancia_limite)
 {
     Elem *compare = *li;
     Elem *aux = *li;
+    double media_distancia = 0;
+    int tamanho = 0;
     while(compare->prox != NULL)
     {
         // compare = ultimo elemento da lista na ultima iteracao do while
+        tamanho++;
         compare = compare->prox;
     }
-
+    media_distancia = compare->distancia_percorrida;
+    media_distancia = media_distancia/tamanho; 
     Elem *inicio = aux;
     Elem *fim = compare;
     // divisao para ver se havera encontrao entre os dois nos
-    int divisao = compare->distancia_percorrida / 2;
+    double divisao = compare->distancia_percorrida / 2;
     // se nao houver encontrao entre os dois lados da lista
-    if(distancia_limite < divisao)
+    if(distancia_limite < divisao && (media_distancia < distancia_limite))
     {
         double esquerdo = 0, direito = 0;
         // enquanto a distancia entre os dois nos for maior que a distancia passada pelo usuario
@@ -153,7 +155,7 @@ int remocao_gps(Lista* li, double distancia_limite)
         compare->ant = aux; 
     }
     // caso haja encontrao entre os dois nos
-    else
+    else if(media_distancia < distancia_limite)
     {
         // faz o aux ser igual ao compare
         while(aux != compare)
@@ -166,10 +168,10 @@ int remocao_gps(Lista* li, double distancia_limite)
         aux->prox = fim;
         fim->ant = aux;
     }
-    free(aux);
-    free(compare);
-    free(inicio);
-    free(fim);
+    else
+    {
+        ;
+    }
     return OK;
 }
 
@@ -184,7 +186,6 @@ void imprime_lista(Lista* li)
                no->tempo, no->velocidade, no->distancia_percorrida);
         no = no->prox;
     }
-    free(no);
 }
 
 void libera_lista(Lista* li)

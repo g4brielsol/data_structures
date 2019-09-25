@@ -42,8 +42,8 @@ void funcao_decisao(Lista* li)
     
     else if(decisao == 2)
     {
-        int distancia;
-        scanf("%d", &distancia);
+        double distancia;
+        scanf("%lf", &distancia);
         remocao_gps(li, distancia);
         imprime_lista(li);
     }
