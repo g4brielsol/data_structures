@@ -110,28 +110,37 @@ int remocao_gps(Lista* li, double distancia_limite)
     if(distancia_limite < divisao && (media_distancia < distancia_limite))
     {
         double esquerdo = 0, direito = 0;
+        Elem *dir_ultimo;
+        Elem *esq_ultimo;
+        double soma_percorrida;
         // enquanto a distancia entre os dois nos for maior que a distancia passada pelo usuario
-        while(fabs(aux->distancia_percorrida - compare->distancia_percorrida) > distancia_limite)
+        while((fabs(aux->distancia_percorrida - compare->distancia_percorrida) > distancia_limite))
         {   //enquanto o esquerdo for menor ou igual ao o direito, aux avanca pra frente
             if(esquerdo <= direito)
             {
+                soma_percorrida = aux->distancia_percorrida;
                 aux = aux->prox;
-                esquerdo += fabs(aux->distancia_percorrida - (aux->ant)->distancia_percorrida);
+                esquerdo += fabs(aux->distancia_percorrida - soma_percorrida);
+printf("esquerdo atual %lf\n", aux->distancia_percorrida);
             }
             // se o direito for menor, compare avanca pra tras
             else
             {
+                soma_percorrida = compare->distancia_percorrida;
                 compare = compare->ant;
-                direito += fabs(compare->distancia_percorrida - (compare->prox)->distancia_percorrida);
+                direito += fabs(compare->distancia_percorrida - soma_percorrida);
+printf("direito atual %lf\n", compare->distancia_percorrida);
             }
             // se a distancia do aux->prox até o início for maior que o limite,
             //  exclui todos elementos entre o aux atual e o inicio
             if(fabs((aux->prox)->distancia_percorrida) - inicio->distancia_percorrida > distancia_limite)
             {
-                //printf("entrou aux\n");
                 aux->ant = inicio;
                 inicio->prox = aux;
                 inicio = aux;
+                esq_ultimo = aux;
+printf("esquerdo prox dif %lf\n", (aux->prox)->distancia_percorrida - inicio->distancia_percorrida);
+printf("%lf\n", inicio->distancia_percorrida);
             }
             else
             {
@@ -144,15 +153,26 @@ int remocao_gps(Lista* li, double distancia_limite)
                 compare->prox = fim;
                 fim->ant = compare;
                 fim = compare;
+                dir_ultimo = compare;
+printf("direito prox dif %lf\n", (compare->ant)->distancia_percorrida - fim->distancia_percorrida);
+printf("%lf\n", fim->distancia_percorrida);
             }
             else
             {
                 ;
             }
         }
-        // aponta o aux para o compare e o compare para o aux
-        aux->prox = compare;
-        compare->ant = aux; 
+        // elimina os nos entre o aux e o compare
+        
+        esq_ultimo->prox = dir_ultimo;
+        dir_ultimo->ant = esq_ultimo;
+        
+        //esq_ultimo->prox = aux;
+        //aux->ant = esq_ultimo;
+        //aux->prox = compare;
+        //compare->ant = aux->prox;
+        //compare->prox = dir_ultimo;
+        //dir_ultimo->ant = compare; 
     }
     // caso haja encontrao entre os dois nos
     else if(media_distancia < distancia_limite)
