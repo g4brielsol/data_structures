@@ -144,8 +144,6 @@ void main()
     char salario_string[100];
     float salario_float = -1;
     //char *linha; 
-    char linha[100];
-    char info[100], c;
  
     scanf("%d", &entradas);
     printf("%d\n", entradas);
@@ -153,11 +151,13 @@ void main()
     
     for(int j = 0; j < entradas; ++j)
     {
+        char linha[100];
         scanf(" %[^\n]s", linha);
         printf("%s\n", linha);
 
         //printf("digite V F\n");
-        ArvBin *copia = arvore;
+        //ArvBin* copia = arvore;
+        ArvBin* copia;// = arvore;
         int chave = 0;
         for(int k = 0; k < strlen(linha); ++k)
         {
@@ -171,13 +171,13 @@ void main()
             else if(linha[k] == 86)
             {
                 printf("Entrou V\n");
-                consulta_raiz(copia,  linha[k]);
+                copia = consulta_raiz(arvore,  linha[k]);
             }
             // se for igual a F
             else if(linha[k] == 70)
             {
                 printf("entrou F \n");
-                consulta_raiz(copia, linha[k]);
+                copia = consulta_raiz(arvore, linha[k]);
             }
             else if(linha[k] == 32)
             {
@@ -192,12 +192,12 @@ void main()
                 int fim_caractere = tamanho_restante + 1;
                 strncpy(salario_string, linha + k, tamanho_restante);
                 salario_string[fim_caractere] = '\0';
-                printf("salario %s", salario_string);
+                printf("salario %s\n", salario_string);
             //}
             // Se for a letra N: printa
             //else if (linha[k] == 78)
             //{
-                printf("entrou N e printa\n");
+                //printf("entrou N e printa\n");
                 salario_float = atof(salario_string);        
                 //print_numero(copia, salario_float);//, (copia->frase);
                 if(salario_float >= (*copia)->teste_certeza && (*copia)->teste_certeza > 3000)
@@ -209,10 +209,17 @@ void main()
                     (*copia) = (*copia)->esq;
                 }
             }
-            if(k == strlen(linha) - 1)
+            // Se for a letra N
+            if((linha[k] == 78))
+            {
+                printf("Entrou N\n");
+                float zero = 0;
+                Procura_maior_confianca(copia, zero, (*copia)->frase);
+            }
+            else if(k == strlen(linha) - 1)
             {
                 printf("entrou Printa\n");
-                printf("final %s", (*copia)->frase);
+                printf("final %s\n", (*copia)->frase);
                 //salario_float = atof(salario_string);
                 //print_binario(copia, salario_float);//, (*copia)->frase);    
             }

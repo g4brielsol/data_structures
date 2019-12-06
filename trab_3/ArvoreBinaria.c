@@ -91,7 +91,6 @@ void Procura_preOrdem_insere(ArvBin* raiz, Tipo_int tipo_no, Tipo_int indice_int
                              Tipo_int tipo_no_B, Tipo_int indice_int_2, Tipo_char esq_dir, Tipo_float tc)
 {
     //printf("Entrou procura\n");
-
     if(raiz == NULL)
     {
         return;
@@ -151,13 +150,13 @@ void Procura_preOrdem_insere(ArvBin* raiz, Tipo_int tipo_no, Tipo_int indice_int
                                   novo->esq_dir, novo->teste_certeza);
 
     }
-    return;
 }
 
-void consulta_raiz(ArvBin *raiz, int valor){
+ArvBin* consulta_raiz(ArvBin *raiz, int valor){
     if(raiz == NULL)
-        return 0;
-    struct NO* atual = *raiz;
+        return (raiz);
+    ArvBin *copia;
+    copia = raiz;
     //while(atual != NULL){
     // se for V, vai pra esquerda
     printf("letra %c indice %d valor %d \n", (*raiz)->letra, (*raiz)->indice, valor);
@@ -166,17 +165,54 @@ void consulta_raiz(ArvBin *raiz, int valor){
     {
         printf("entrou esquerda\n");
         (*raiz) = (*raiz)->esq;
-        return;
+        return (copia);
     }
     // se for F, vai pra direita
     else if(valor == 70)
     {
         printf("entrou direita\n");
         (*raiz) = (*raiz)->dir;
-        return;
+        return (copia);
     }
     //}
     //return (*raiz);
+}
+
+void Procura_maior_confianca(ArvBin *raiz, Tipo_float valor, Tipo_char *frase_final)
+{
+    //printf("frase %s\n", frase_final);
+    if(raiz == NULL)
+    {
+        //printf("frase null %s\n", frase_final);
+        printf("retornou\n");
+        return;
+    }
+
+    char *frase_n;
+    frase_n = (char*)malloc ( USER_SIZE * sizeof (char));  
+    strcpy(frase_n, frase_final);
+    float valor_comparacao = valor, tres_mil = 3000;
+    //printf("letra %c indice %d valor %f \n", (*raiz)->letra, (*raiz)->indice, valor);
+    printf("raiz letra %c raiz indice %d raiz valor %f \n", (*raiz)->letra, (*raiz)->indice, (*raiz)->teste_certeza);    
+    
+    if(*raiz != NULL)
+    {
+        if ((valor < (*raiz)->teste_certeza) && ((*raiz)->teste_certeza < tres_mil))
+        {
+            printf("entrou mudanca\n");
+            valor_comparacao = (*raiz)->teste_certeza;
+            strcpy(frase_n, (*raiz)->frase);
+            return;
+        }
+        printf("%f\n", valor);
+        printf("%s\n", frase_n);
+
+        //printf("recursao a esquerda\n");
+        Procura_maior_confianca(&((*raiz)->dir), valor_comparacao, frase_n);
+        Procura_maior_confianca(&((*raiz)->esq), valor_comparacao, frase_n);
+        //printf("recursao a direita\n");
+
+    }
 }
 
 void print_binario(ArvBin *raiz, Tipo_float valor)//, Tipo_char *frase_final)

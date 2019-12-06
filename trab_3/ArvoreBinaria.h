@@ -28,10 +28,12 @@ char *get_no();
 char *get_esq_dir();
 void libera_ArvBin(ArvBin *raiz);
 void Procura_preOrdem_insere(ArvBin* raiz, Tipo_int tipo_no, Tipo_int indice_int, Tipo_char frase[100],
-                             Tipo_int tipo_no_B, Tipo_int indice_int_2, Tipo_char esq_dir, Tipo_float tc);//, Tipo_char *achou);
+                             Tipo_int tipo_no_B, Tipo_int indice_int_2, Tipo_char esq_dir, Tipo_float tc);
 void insere_raiz(ArvBin* raiz, Tipo_char letra_pass, Tipo_int indice_pass, Tipo_char *frase_pass);
 int insere_binario(ArvBin* raiz, char letra_pass, Tipo_int indice_pass, char frase_pass);
-void consulta_raiz(ArvBin *raiz, int valor);
+ArvBin* consulta_raiz(ArvBin *raiz, int valor);
+void Procura_maior_confianca(ArvBin *raiz, Tipo_float valor, Tipo_char *frase_final);
+
 void print_binario(ArvBin *raiz, Tipo_float valor);
 void print_numero(ArvBin *raiz, Tipo_float valor);
 
