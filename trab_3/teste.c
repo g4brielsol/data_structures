@@ -3,7 +3,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include "ArvoreBinaria.h"
-#define USER_SIZE 10
+
 void chamar_funcao(char teste[4], char tipo[2], char frase[])
 {
     printf("indice: %s\n", teste);
@@ -14,13 +14,26 @@ void chamar_funcao(char teste[4], char tipo[2], char frase[])
 char *get_no_nao_folha()
 {
     char *no_nao_folha;
-    no_nao_folha = (char*)malloc ( USER_SIZE * sizeof (char));
+    no_nao_folha = (char*)malloc (USER_SIZE * sizeof (char));
     scanf("%s", no_nao_folha);
     return(no_nao_folha);
 }
 
 void main()
 {
+    int entradas;
+    char linha[100];
+    scanf("%d", &entradas);
+    scanf("%s", linha);
+    for(int j = 0; j < entradas; ++j)
+    {
+        for(int k; k < strlen(linha); ++k)
+        {
+            printf("%c", linha[k]);
+            printf("%d", linha[k]);
+        }
+    }
+    /*
     //char *no_nao_folha;
     char *frase, *no_pai;
     //no_nao_folha = (char*)malloc ( USER_SIZE * sizeof (char));
@@ -48,6 +61,7 @@ void main()
     }
     //printf("frase: %s\n", frase);
     //printf("frase: %s\n", no_pai);
+    */
 }
 
 

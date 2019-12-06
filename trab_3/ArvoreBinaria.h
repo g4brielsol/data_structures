@@ -1,6 +1,6 @@
 //  Arquivo ArvBinaria.h
 
-#define USER_SIZE 5
+#define USER_SIZE 10000
 
 typedef int Tipo_int;
 typedef float Tipo_float;
@@ -31,6 +31,10 @@ void Procura_preOrdem_insere(ArvBin* raiz, Tipo_int tipo_no, Tipo_int indice_int
                              Tipo_int tipo_no_B, Tipo_int indice_int_2, Tipo_char esq_dir, Tipo_float tc);//, Tipo_char *achou);
 void insere_raiz(ArvBin* raiz, Tipo_char letra_pass, Tipo_int indice_pass, Tipo_char *frase_pass);
 int insere_binario(ArvBin* raiz, char letra_pass, Tipo_int indice_pass, char frase_pass);
+void consulta_raiz(ArvBin *raiz, int valor);
+void print_binario(ArvBin *raiz, Tipo_float valor);
+void print_numero(ArvBin *raiz, Tipo_float valor);
+
 int remove_ArvBin(ArvBin *raiz, Tipo_int valor);
 int estaVazia_ArvBin(ArvBin *raiz);
 int altura_ArvBin(ArvBin *raiz);

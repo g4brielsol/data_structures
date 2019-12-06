@@ -12,21 +12,6 @@ ArvBin* cria_ArvBin(){
     return raiz;
 }
 
-char *get_no()
-{
-    char *no_arvore;
-    no_arvore = (char*)malloc ( USER_SIZE * sizeof (char));
-    scanf("%s", no_arvore);
-    return(no_arvore);
-}
-
-char *get_esq_dir()
-{
-    char *escolha;
-    escolha = (char*)malloc ( USER_SIZE * sizeof (char));
-    scanf("%s", &escolha);
-    return(escolha);
-}
 void libera_NO(struct NO* no){
     if(no == NULL)
         return;
@@ -52,23 +37,24 @@ void insere_raiz(ArvBin* raiz, Tipo_char letra_pass, Tipo_int indice_pass, Tipo_
     if(novo == NULL)
         return;
         
-    printf("ver constantes\n");
+   // printf("ver constantes\n");
     novo->letra = letra_pass;
     novo->indice = indice_pass;
-    novo->frase = frase_pass;
+    novo->frase = (char*)malloc ( USER_SIZE * sizeof (char)); 
+    strcpy(novo->frase, frase_pass);
     novo->esq_dir = NULL;
     novo->letra_pai = 82;
     novo->indice_pai = 0;
     novo->dir = NULL;
     novo->esq = NULL;
-    printf("constantes vistas\n");
-    printf("letra ascii %c\n", novo->letra);
-    printf("letra indice %d\n", novo->indice);
-    printf("letra frase %s\n", novo->frase);
+   // printf("constantes vistas\n");
+   // printf("letra ascii %c\n", novo->letra);
+   // printf("letra indice %d\n", novo->indice);
+   // printf("letra frase %s\n", novo->frase);
 
     if(*raiz == NULL)
     {
-        printf("nova raiz\n");
+        //printf("nova raiz\n");
         *raiz = novo;
     }
     else{
@@ -81,6 +67,7 @@ void insere_raiz(ArvBin* raiz, Tipo_char letra_pass, Tipo_int indice_pass, Tipo_
             if((novo->letra == atual->letra) && (novo->indice == atual->indice))
             {
                 free(novo);
+                //free(frase_pass);
                 return;//elemento j� existe
             }
         /*
@@ -95,6 +82,7 @@ void insere_raiz(ArvBin* raiz, Tipo_char letra_pass, Tipo_int indice_pass, Tipo_
             ant->esq = novo;
         */
         }
+    //free(frase_pass);
     return;
     }
 }
@@ -102,115 +90,141 @@ void insere_raiz(ArvBin* raiz, Tipo_char letra_pass, Tipo_int indice_pass, Tipo_
 void Procura_preOrdem_insere(ArvBin* raiz, Tipo_int tipo_no, Tipo_int indice_int, Tipo_char *frase,
                              Tipo_int tipo_no_B, Tipo_int indice_int_2, Tipo_char esq_dir, Tipo_float tc)
 {
-    printf("Entrou procura\n");
-    //char teste = achou;
-    //printf("achou %s\n", achou);
-    //printf("achou %d\n", *achou);
-    // se achou for a letra V
+    //printf("Entrou procura\n");
+
     if(raiz == NULL)
     {
         return;
     }
-    //  if (*achou == 86)
-    //{
-    //    return;
-    //}
 
     struct NO* novo;
     novo = (struct NO*) malloc(sizeof(struct NO));
 
     novo->letra = tipo_no;
     novo->indice = indice_int;
-    novo->frase = frase;      
+    novo->frase = (char*)malloc ( USER_SIZE * sizeof (char)); 
+    strcpy(novo->frase, frase);    
     novo->letra_pai = tipo_no_B;
     novo->indice_pai = indice_int_2;
     novo->esq_dir = esq_dir;
     novo->teste_certeza = tc;
     novo->dir = NULL;
     novo->esq = NULL;
-    printf("letra %c indice %d frase %s letra pai %c indice pai %d esq_dir %c tc %f\n", novo->letra, novo->indice,
-           novo->frase, novo->letra_pai, novo->indice_pai, novo->esq_dir, novo->teste_certeza);
-    //printf("letra %c\n", (*raiz)->letra);
-    
-    struct NO *atual;
-    atual = *raiz;
+    //printf("letra %c indice %d frase %s letra pai %c indice pai %d esq_dir %c tc %f\n", novo->letra, novo->indice,
+    //       novo->frase, novo->letra_pai, novo->indice_pai, novo->esq_dir, novo->teste_certeza);
 
     if(*raiz != NULL)
     {
+        // se achar o no pai
         if ((novo->letra_pai == (*raiz)->letra) && (novo->indice_pai == (*raiz)->indice))
         {
-            //achou = "V\0";
-            printf("Achou: %d! \n",(*raiz)->indice);   // indice  Int
+            //printf("Achou: %d! \n",(*raiz)->indice);   // indice  Int
+            // Se for E
             if(novo->esq_dir == 69)
             {
-                printf("Colocou no a esquerda\n");
-                printf("\n");
+            //    printf("Colocou no a esquerda\n");
+            //    printf("\n");
                 (*raiz)->esq = novo;
                 return;
             }
+            // Se for D
             else if(novo->esq_dir == 68)
             {
-                printf("Colocou no a direita\n");
-                printf("\n");
+            //    printf("Colocou no a direita\n");
+            //    printf("\n");
                 (*raiz)->dir = novo;
                 return;
             }
         }
-        // ja existe
+        // Se o indice e a letra ja existem
         else if((novo->letra == (*raiz)->letra) && (novo->indice == (*raiz)->indice))
         {
-            printf("No existente, retornar");
+        //    printf("No existente, retornou");
             return;
         }
         //printf("achou 2 %d\n", *achou);
-        printf("Recursao a esquerda\n");
+       // printf("Recursao a esquerda\n");
         Procura_preOrdem_insere(&((*raiz)->esq), novo->letra, novo->indice, novo->frase, novo->letra_pai, novo->indice_pai,
-                                  novo->esq_dir, novo->teste_certeza);//, achou);
-        printf("Recursao a direita\n");
+                                  novo->esq_dir, novo->teste_certeza);
+       // printf("Recursao a direita\n");
         Procura_preOrdem_insere(&((*raiz)->dir), novo->letra, novo->indice, novo->frase, novo->letra_pai, novo->indice_pai,
-                                  novo->esq_dir, novo->teste_certeza);//, achou);
+                                  novo->esq_dir, novo->teste_certeza);
 
     }
     return;
 }
 
-/*
-int insere_ArvBin(ArvBin* raiz, Tipo_Dado valor){
+void consulta_raiz(ArvBin *raiz, int valor){
     if(raiz == NULL)
         return 0;
-    struct NO* novo;
-    novo = (struct NO*) malloc(sizeof(struct NO));
-    if(novo == NULL)
-        return 0;
-    novo->info = valor;
-    novo->dir = NULL;
-    novo->esq = NULL;
-
-    if(*raiz == NULL)
-        *raiz = novo;
-    else{
-        struct NO* atual = *raiz;
-        struct NO* ant = NULL;
-        while(atual != NULL){
-            ant = atual;
-            if(valor == atual->info){
-                free(novo);
-                return 0;//elemento já existe
-            }
-
-            if(valor > atual->info)
-                atual = atual->dir;
-            else
-                atual = atual->esq;
-        }
-        if(valor > ant->info)
-            ant->dir = novo;
-        else
-            ant->esq = novo;
+    struct NO* atual = *raiz;
+    //while(atual != NULL){
+    // se for V, vai pra esquerda
+    printf("letra %c indice %d valor %d \n", (*raiz)->letra, (*raiz)->indice, valor);
+    // se for V, vai pra esquerda
+    if(valor == 86)
+    {
+        printf("entrou esquerda\n");
+        (*raiz) = (*raiz)->esq;
+        return;
     }
-    return 1;
+    // se for F, vai pra direita
+    else if(valor == 70)
+    {
+        printf("entrou direita\n");
+        (*raiz) = (*raiz)->dir;
+        return;
+    }
+    //}
+    //return (*raiz);
 }
-*/
+
+void print_binario(ArvBin *raiz, Tipo_float valor)//, Tipo_char *frase_final)
+{
+    //char *sentence;
+    //sentence = (char*)malloc ( USER_SIZE * sizeof (char));
+    printf("frase %s", (*raiz)->frase);
+
+    if(raiz == NULL)
+        printf("final:  %s", (*raiz)->frase);
+        return;
+    if(*raiz != NULL)
+    {
+            printf("letra %c indice %d teste_certeza %f", (*raiz)->letra, (*raiz)->indice, (*raiz)->teste_certeza);
+        if ((valor < (*raiz)->teste_certeza) && (*raiz)->teste_certeza < 1000)
+        {
+        //  printf("Achou: %d! \n",(*raiz)->letra);   // indice � Int
+            valor = (*raiz)->teste_certeza;            
+            //strcpy(sentence, frase_final);
+        }
+        //Procura_preOrdem_ArvBin(&((*raiz)->esq), valor, sentence);
+        //Procura_preOrdem_ArvBin(&((*raiz)->dir), valor, sentence);
+    }
+}
+
+void print_numero(ArvBin *raiz, Tipo_float valor)//, Tipo_char *frase_final)
+{
+    //char *sentence;
+    //sentence = (char*)malloc ( USER_SIZE * sizeof (char));
+    printf("frase %s", (*raiz)->frase);
+
+    if(raiz == NULL)
+        printf("final:  %s", (*raiz)->frase);
+        return;
+    if(*raiz != NULL)
+    {
+            printf("letra %c indice %d teste_certeza %f", (*raiz)->letra, (*raiz)->indice, (*raiz)->teste_certeza);
+        if ((valor < (*raiz)->teste_certeza) && (*raiz)->teste_certeza < 1000)
+        {
+        //  printf("Achou: %d! \n",(*raiz)->letra);   // indice � Int
+            valor = (*raiz)->teste_certeza;            
+            //strcpy(sentence, frase_final);
+        }
+        //Procura_preOrdem_ArvBin(&((*raiz)->esq), valor, sentence);
+        //Procura_preOrdem_ArvBin(&((*raiz)->dir), valor, sentence);
+    }
+}
+
 struct NO* remove_atual(struct NO* atual) {
     struct NO *no1, *no2;
     if(atual->esq == NULL){
@@ -313,7 +327,7 @@ void preOrdem_ArvBin(ArvBin *raiz)
     if(raiz == NULL)
         return;
     if(*raiz != NULL){
-        printf("%d %s %s \n",(*raiz)->indice, (*raiz)->letra, (*raiz)->frase);          // Info � Int
+        //printf("%d %s %s \n",(*raiz)->indice, (*raiz)->letra, (*raiz)->frase);          // Info � Int
         preOrdem_ArvBin(&((*raiz)->esq));
         preOrdem_ArvBin(&((*raiz)->dir));
     }
@@ -325,7 +339,7 @@ void emOrdem_ArvBin(ArvBin *raiz)
         return;
     if(*raiz != NULL){
         emOrdem_ArvBin(&((*raiz)->esq));
-        printf("%d\n",(*raiz)->indice);          // Info � Int
+        //printf("%d\n",(*raiz)->indice);          // Info � Int
         emOrdem_ArvBin(&((*raiz)->dir));
     }
 }
@@ -337,7 +351,7 @@ void posOrdem_ArvBin(ArvBin *raiz)
     if(*raiz != NULL){
         posOrdem_ArvBin(&((*raiz)->esq));
         posOrdem_ArvBin(&((*raiz)->dir));
-        printf("%d\n",(*raiz)->indice);         // Info � Int
+        //printf("%d\n",(*raiz)->indice);         // Info � Int
     }
 }
 
@@ -345,10 +359,10 @@ void posOrdem_ArvBin(ArvBin *raiz)
 
 void Procura_preOrdem_ArvBin(ArvBin *raiz, Tipo_char valor, int *achou)
 {
-    printf("achou %s\n", achou);
-    printf("achou %d\n", *achou);
-    printf("raiz %s\n", (*raiz)->letra);
-    printf("raiz %d\n", (*raiz)->letra);
+    //printf("achou %s\n", achou);
+    //printf("achou %d\n", *achou);
+    //printf("raiz %s\n", (*raiz)->letra);
+    //printf("raiz %d\n", (*raiz)->letra);
     if(raiz == NULL)
         return;
     if (*achou)
@@ -357,7 +371,7 @@ void Procura_preOrdem_ArvBin(ArvBin *raiz, Tipo_char valor, int *achou)
     {
         if (valor == (*raiz)->letra)
         {
-            printf("Achou: %d! \n",(*raiz)->letra);   // indice � Int
+            //printf("Achou: %d! \n",(*raiz)->letra);   // indice � Int
             *achou=1;
         }
         Procura_preOrdem_ArvBin(&((*raiz)->esq),valor,&achou);
@@ -372,14 +386,14 @@ void Exibe_emOrdem_ArvBin(ArvBin *raiz)
 
     if(*raiz != NULL)
     {
-        printf("Atual: %d - Vai para Esquerda \n",(*raiz)->indice);   // indice � Int
+        //printf("Atual: %d - Vai para Esquerda \n",(*raiz)->indice);   // indice � Int
         Exibe_emOrdem_ArvBin(&((*raiz)->esq));
-        printf("Dado : %d \n",(*raiz)->indice);
-        printf("Atual: %d - Vai para Direita \n",(*raiz)->indice);    // indice � Int
+        //printf("Dado : %d \n",(*raiz)->indice);
+        //printf("Atual: %d - Vai para Direita \n",(*raiz)->indice);    // indice � Int
         Exibe_emOrdem_ArvBin(&((*raiz)->dir));
-        printf("Feito(%d) \n",(*raiz)->indice);                       // Info � Int
+       // printf("Feito(%d) \n",(*raiz)->indice);                       // Info � Int
     }
-    else
-        printf("NULL\n");
+    //else
+        //printf("NULL\n");
 
 }
