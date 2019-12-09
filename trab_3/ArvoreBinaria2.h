@@ -35,8 +35,6 @@ int insere_binario(ArvBin* raiz, char letra_pass, Tipo_int indice_pass, char fra
 NodoArvBin* consulta_raiz(NodoArvBin* atual, int valor);
 void Procura_maior_confianca(NodoArvBin* atual, Tipo_float *valor, Tipo_char *frase_final);
 
-void print_binario(ArvBin *raiz, Tipo_float valor);
-void print_numero(ArvBin *raiz, Tipo_float valor);
 
 int remove_ArvBin(ArvBin *raiz, Tipo_int valor);
 int estaVazia_ArvBin(ArvBin *raiz);

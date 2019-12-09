@@ -42,7 +42,7 @@ void insere_raiz(ArvBin* raiz, Tipo_char letra_pass, Tipo_int indice_pass, Tipo_
     novo->indice = indice_pass;
     novo->frase = (char*)malloc ( USER_SIZE * sizeof (char)); 
     strcpy(novo->frase, frase_pass);
-    novo->esq_dir = NULL;
+    //strcpy(novo->esq_dir, 32);
     novo->letra_pai = 82;
     novo->indice_pai = 0;
     novo->dir = NULL;
@@ -166,18 +166,18 @@ NodoArvBin* consulta_raiz(NodoArvBin* atual, int valor){
     //copia = raiz;
     //while(atual != NULL){
     // se for V, vai pra esquerda
-    printf("ATUAL %c indice %d valor %d \n", atual->letra, atual->indice, valor);
+    //printf("ATUAL %c indice %d valor %d \n", atual->letra, atual->indice, valor);
     // se for V, vai pra esquerda
     if(valor == 86)
     {
-        printf("entrou esquerda\n");
+    //    printf("entrou esquerda\n");
         atual = atual->esq;
         return (atual);
     }
     // se for F, vai pra direita
     else if(valor == 70)
     {
-        printf("entrou direita\n");
+    //    printf("entrou direita\n");
         atual = atual->dir;
         return (atual);
     }
@@ -191,23 +191,23 @@ void Procura_maior_confianca(NodoArvBin* atual, Tipo_float *valor, Tipo_char *fr
     if(atual == NULL)
     {
         //printf("frase null %s\n", frase_final);
-        printf("retornou\n");
+    //    printf("retornou\n");
         return;
     }
 
     float tres_mil = 3000;
     //printf("letra %c indice %d valor %f \n", (*raiz)->letra, (*raiz)->indice, valor);
-    printf("raiz letra %c raiz indice %d raiz teste certeza %f valor %f \n", atual->letra, atual->indice, atual->teste_certeza, *valor);    
+    //printf("raiz letra %c raiz indice %d raiz teste certeza %f valor %f \n", atual->letra, atual->indice, atual->teste_certeza, *valor);    
     
     if(atual != NULL)
     {
         if ((*valor < atual->teste_certeza) && (atual->teste_certeza < tres_mil))
         {
-            printf("Entrou Mudanca\n");
+    //        printf("Entrou Mudanca\n");
             *valor = atual->teste_certeza;
             strcpy(frase_final, atual->frase);
-            printf("%s\n", frase_final);
-            printf("%f\n", *valor);
+    //        printf("%s\n", frase_final);
+    //        printf("%f\n", *valor);
             return;
         }
         //printf("recursao a esquerda\n");
@@ -215,52 +215,6 @@ void Procura_maior_confianca(NodoArvBin* atual, Tipo_float *valor, Tipo_char *fr
         Procura_maior_confianca(atual->esq, &(*valor), frase_final);
         //printf("recursao a direita\n");
 
-    }
-}
-
-void print_binario(ArvBin *raiz, Tipo_float valor)//, Tipo_char *frase_final)
-{
-    //char *sentence;
-    //sentence = (char*)malloc ( USER_SIZE * sizeof (char));
-    printf("frase %s", (*raiz)->frase);
-
-    if(raiz == NULL)
-        printf("final:  %s", (*raiz)->frase);
-        return;
-    if(*raiz != NULL)
-    {
-            printf("letra %c indice %d teste_certeza %f", (*raiz)->letra, (*raiz)->indice, (*raiz)->teste_certeza);
-        if ((valor < (*raiz)->teste_certeza) && (*raiz)->teste_certeza < 1000)
-        {
-        //  printf("Achou: %d! \n",(*raiz)->letra);   // indice � Int
-            valor = (*raiz)->teste_certeza;            
-            //strcpy(sentence, frase_final);
-        }
-        //Procura_preOrdem_ArvBin(&((*raiz)->esq), valor, sentence);
-        //Procura_preOrdem_ArvBin(&((*raiz)->dir), valor, sentence);
-    }
-}
-
-void print_numero(ArvBin *raiz, Tipo_float valor)//, Tipo_char *frase_final)
-{
-    //char *sentence;
-    //sentence = (char*)malloc ( USER_SIZE * sizeof (char));
-    printf("frase %s", (*raiz)->frase);
-
-    if(raiz == NULL)
-        printf("final:  %s", (*raiz)->frase);
-        return;
-    if(*raiz != NULL)
-    {
-            printf("letra %c indice %d teste_certeza %f", (*raiz)->letra, (*raiz)->indice, (*raiz)->teste_certeza);
-        if ((valor < (*raiz)->teste_certeza) && (*raiz)->teste_certeza < 1000)
-        {
-        //  printf("Achou: %d! \n",(*raiz)->letra);   // indice � Int
-            valor = (*raiz)->teste_certeza;            
-            //strcpy(sentence, frase_final);
-        }
-        //Procura_preOrdem_ArvBin(&((*raiz)->esq), valor, sentence);
-        //Procura_preOrdem_ArvBin(&((*raiz)->dir), valor, sentence);
     }
 }
 
@@ -314,36 +268,7 @@ int remove_ArvBin(ArvBin *raiz, Tipo_int valor){
     return 0;
 }
 
-int estaVazia_ArvBin(ArvBin *raiz){
-    if(raiz == NULL)
-        return 1;
-    if(*raiz == NULL)
-        return 1;
-    return 0;
-}
 
-int totalNO_ArvBin(ArvBin *raiz){
-    if (raiz == NULL)
-        return 0;
-    if (*raiz == NULL)
-        return 0;
-    int alt_esq = totalNO_ArvBin(&((*raiz)->esq));
-    int alt_dir = totalNO_ArvBin(&((*raiz)->dir));
-    return(alt_esq + alt_dir + 1);
-}
-
-int altura_ArvBin(ArvBin *raiz){
-    if (raiz == NULL)
-        return 0;
-    if (*raiz == NULL)
-        return 0;
-    int alt_esq = altura_ArvBin(&((*raiz)->esq));
-    int alt_dir = altura_ArvBin(&((*raiz)->dir));
-    if (alt_esq > alt_dir)
-        return (alt_esq + 1);
-    else
-        return(alt_dir + 1);
-}
 
 int consulta_ArvBin(ArvBin *raiz, int valor){
     if(raiz == NULL)
@@ -395,7 +320,7 @@ void posOrdem_ArvBin(ArvBin *raiz)
 }
 
 // Funcoes Adicionais de Arvore
-
+/*
 void Procura_preOrdem_ArvBin(ArvBin *raiz, Tipo_char valor, int *achou)
 {
     //printf("achou %s\n", achou);
@@ -417,7 +342,7 @@ void Procura_preOrdem_ArvBin(ArvBin *raiz, Tipo_char valor, int *achou)
         Procura_preOrdem_ArvBin(&((*raiz)->dir),valor,&achou);
     }
 }
-
+*/
 void Exibe_emOrdem_ArvBin(ArvBin *raiz)
 {
     if(raiz == NULL)
