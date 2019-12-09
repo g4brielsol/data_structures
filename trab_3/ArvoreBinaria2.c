@@ -166,18 +166,18 @@ NodoArvBin* consulta_raiz(NodoArvBin* atual, int valor){
     //copia = raiz;
     //while(atual != NULL){
     // se for V, vai pra esquerda
-    //printf("ATUAL %c indice %d valor %d \n", atual->letra, atual->indice, valor);
+    printf("ATUAL %c indice %d valor %d \n", atual->letra, atual->indice, valor);
     // se for V, vai pra esquerda
     if(valor == 86)
     {
-    //    printf("entrou esquerda\n");
+        printf("entrou esquerda\n");
         atual = atual->esq;
         return (atual);
     }
     // se for F, vai pra direita
     else if(valor == 70)
     {
-    //    printf("entrou direita\n");
+       printf("entrou direita\n");
         atual = atual->dir;
         return (atual);
     }
@@ -197,17 +197,17 @@ void Procura_maior_confianca(NodoArvBin* atual, Tipo_float *valor, Tipo_char *fr
 
     float tres_mil = 3000;
     //printf("letra %c indice %d valor %f \n", (*raiz)->letra, (*raiz)->indice, valor);
-    //printf("raiz letra %c raiz indice %d raiz teste certeza %f valor %f \n", atual->letra, atual->indice, atual->teste_certeza, *valor);    
+    printf("raiz letra %c raiz indice %d raiz teste certeza %f valor %f \n", atual->letra, atual->indice, atual->teste_certeza, *valor);    
     
     if(atual != NULL)
     {
         if ((*valor < atual->teste_certeza) && (atual->teste_certeza < tres_mil))
         {
-    //        printf("Entrou Mudanca\n");
+            printf("Entrou Mudanca\n");
             *valor = atual->teste_certeza;
             strcpy(frase_final, atual->frase);
-    //        printf("%s\n", frase_final);
-    //        printf("%f\n", *valor);
+            printf("%s\n", frase_final);
+            printf("%f\n", *valor);
             return;
         }
         //printf("recursao a esquerda\n");
