@@ -14,7 +14,7 @@ struct NO{
     Tipo_char letra_pai;
     Tipo_int indice_pai;
     Tipo_char esq_dir;
-    Tipo_float teste_certeza;
+    float teste_certeza;
     
     struct NO *esq;
     struct NO *dir;
@@ -25,27 +25,13 @@ typedef struct NO NodoArvBin;
 typedef struct NO *ArvBin;
 
 ArvBin* cria_ArvBin();
-char *get_no();
-char *get_esq_dir();
+void libera_NO(struct NO* no);
 void libera_ArvBin(ArvBin *raiz);
+void insere_raiz(ArvBin* raiz, Tipo_char letra_pass, Tipo_int indice_pass, Tipo_char *frase_pass, float numero);
 void Procura_preOrdem_insere(ArvBin* raiz, Tipo_int tipo_no, Tipo_int indice_int, Tipo_char frase[100],
-                             Tipo_int tipo_no_B, Tipo_int indice_int_2, Tipo_char esq_dir, Tipo_float tc);
-void insere_raiz(ArvBin* raiz, Tipo_char letra_pass, Tipo_int indice_pass, Tipo_char *frase_pass);
-int insere_binario(ArvBin* raiz, char letra_pass, Tipo_int indice_pass, char frase_pass);
+                             Tipo_int tipo_no_B, Tipo_int indice_int_2, int esq_dir, float tc);
+
+
 NodoArvBin* consulta_raiz(NodoArvBin* atual, int valor);
-void Procura_maior_confianca(NodoArvBin* atual, Tipo_float *valor, Tipo_char *frase_final);
-
-
-int remove_ArvBin(ArvBin *raiz, Tipo_int valor);
-int estaVazia_ArvBin(ArvBin *raiz);
-int altura_ArvBin(ArvBin *raiz);
-int totalNO_ArvBin(ArvBin *raiz);
-int consulta_ArvBin(ArvBin *raiz, Tipo_int valor);
-void preOrdem_ArvBin(ArvBin *raiz);
-void emOrdem_ArvBin(ArvBin *raiz);
-void posOrdem_ArvBin(ArvBin *raiz);
-
-// Funcoes Adicionais
-void Procura_preOrdem_ArvBin(ArvBin *raiz, Tipo_char valor, int *achou);
-void Exibe_emOrdem_ArvBin(ArvBin *raiz);
+void Procura_maior_confianca(NodoArvBin* atual, double *valor, Tipo_char *frase_final);
 
